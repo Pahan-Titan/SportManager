@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.tanat.ua.myapplication.CreateNewPeriodActivity">
+    tools:context="com.tanat.ua.sportmanager.CreateNewPeriodActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -44,6 +44,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="33dp"
+                android:textSize="18dp"
+                android:text="Date:"
+                android:id="@+id/textView2" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editDate"
+                android:layout_marginLeft="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
         </LinearLayout>
 
         <EditText
@@ -63,6 +82,12 @@
                 android:layout_height="wrap_content"
                 android:text="Save"
                 android:id="@+id/button_save" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DELETE"
+                android:id="@+id/button_delete" />
         </LinearLayout>
 
     </LinearLayout>

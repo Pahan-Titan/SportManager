@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.tanat.ua.myapplication"
+        applicationId "com.tanat.ua.sportmanager"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
