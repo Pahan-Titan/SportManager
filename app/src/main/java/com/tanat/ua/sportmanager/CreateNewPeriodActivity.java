@@ -95,10 +95,14 @@ public class CreateNewPeriodActivity extends AppCompatActivity implements View.O
                 finish();
                 break;
         }*/
-
+/*нужно реализовать проверку на пустоту*/
         switch (v.getId()){
             case R.id.button_save:
-                if (editName.getText() != null) {
+                if (editName.getText().equals(" ")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "The name can not be null", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
                     if (insert_bool == true) {
                         insert(contentValues, "periods");
                         intent.putExtra("option", "insert");
@@ -110,10 +114,6 @@ public class CreateNewPeriodActivity extends AppCompatActivity implements View.O
                         setResult(RESULT_OK, intent);
                     }
                     finish();
-                } else {
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "The name can not be null", Toast.LENGTH_SHORT);
-                    toast.show();
                 }
                 break;
             case R.id.button_delete:
@@ -148,7 +148,7 @@ public class CreateNewPeriodActivity extends AppCompatActivity implements View.O
         } else {
             Log.d("mLog","cursor = null");
         }
-        dataBase.close();
+ //       dataBase.close();
     }
 
     public static void insert(ContentValues contentValues, String nameTable){

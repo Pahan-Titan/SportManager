@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         spinner = (Spinner) findViewById(R.id.spinner);
 
         loadPeriodsTable();
-        if (NAME_PERIOD != null) upgrade(NAME_PERIOD.size()-1);
+        if (NAME_PERIOD.size() != 0){
+            upgrade(NAME_PERIOD.size()-1);
+        }
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -77,7 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivityForResult(intent, 1);
                 break;
             case (R.id.button_open):
-                intent.putExtra("namePeriod",(String)(spinner.getSelectedItem()));
+                Intent intent2 = new Intent(this, OpenPeriodActivity.class);
+                intent2.putExtra("namePeriod",(String)(spinner.getSelectedItem()));
+                startActivity(intent2);
                 break;
         }
     }
@@ -99,13 +103,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 toastText = "Period added";
             }
             if (option.equals("update")){
-
+                deleteLastRow();
+                loadLastRow();
                 upgrade(NAME_PERIOD.size() - 1);
                 toastText = "Period upgrade";
             }
             if (option.equals("delete")) {
-
-                upgrade(NAME_PERIOD.size() - 2);
+                deleteLastRow();
+                upgrade(NAME_PERIOD.size() - 1);
                 toastText = "Removal done";
             }
             toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
@@ -118,21 +123,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db = dataBase.getWritableDatabase();
         Cursor cursor = db.query("Periods", null, null, null, null, null, "_id");
         if (cursor.moveToFirst()) {
-  /*        int idIndex = cursor.getColumnIndex("_id");
+            int idIndex = cursor.getColumnIndex("_id");
             int nameIndex = cursor.getColumnIndex("name");
             int startWegihtIndex = cursor.getColumnIndex("start_wegiht");
             int endWegihtIndex = cursor.getColumnIndex("end_wegiht");
             int dateIndex = cursor.getColumnIndex("date");
             int descriptionIndex = cursor.getColumnIndex("description");
-*/
+
             int i = 0;
             do {
-                ID.add(cursor.getInt(cursor.getColumnIndex("_id")));
-                NAME_PERIOD.add(cursor.getString(cursor.getColumnIndex("name")));
-                START_WEGIHT.add(cursor.getInt(cursor.getColumnIndex("start_wegiht")));
-                END_WEGIHT.add(cursor.getInt(cursor.getColumnIndex("end_wegiht")));
-                DATE.add(cursor.getString(cursor.getColumnIndex("date")));
-                DESCRIPRION_TEXT.add(cursor.getString(cursor.getColumnIndex("description")));
+                ID.add(cursor.getInt(idIndex));
+                NAME_PERIOD.add(cursor.getString(nameIndex));
+                START_WEGIHT.add(cursor.getInt(startWegihtIndex));
+                END_WEGIHT.add(cursor.getInt(endWegihtIndex));
+                DATE.add(cursor.getString(dateIndex));
+                DESCRIPRION_TEXT.add(cursor.getString(descriptionIndex));
 
                 Log.d("mLog",
                         "ID = " + ID.get(i)
@@ -176,6 +181,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else
             Log.d("mLog", "0 rows");
         dataBase.close();
+    }
+
+    public void deleteLastRow(){
+        int num = NAME_PERIOD.size() - 1;
+        ID.remove(num);
+        NAME_PERIOD.remove(num);
+        START_WEGIHT.remove(num);
+        END_WEGIHT.remove(num);
+        DATE.remove(num);
+        DESCRIPRION_TEXT.remove(num);
     }
 
     protected void upgrade(int item_num){
